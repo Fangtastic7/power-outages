@@ -109,7 +109,19 @@ Since the focus is on severe weather, here is the amount of outages per type of 
 
 Alongside severe weather, I explored the residential, commercial, and industrial electricty consumption rate for each state.
 
+-**Residential Electricity Consumption Rate (%)**
+
 <iframe src="assets/rec_chloro.html" width=600 height=600 frameBorder=0></iframe>
+
+
+-**Commercial Electricity Consumption Rate (%)**
+
+<iframe src="assets/cec_chloro.html" width=600 height=600 frameBorder=0></iframe>
+
+
+-**Industrial Electricity Consumption Rate (%)**
+
+<iframe src="assets/iec_chloro.html" width=600 height=600 frameBorder=0></iframe>
 
 
 ### Statistics of States above 50 Power-Outages 
