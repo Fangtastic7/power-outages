@@ -210,28 +210,32 @@ There is some reportings in the cause category detail of having a null value. In
 **Aproach:** Since we are using two categorical distributions, we use Total Variation Distance to
 determine if they are from the same population or if they are from different populations.
 
- - We first conduct a permutation test with 500 repetitions: 
+- We first conduct a permutation test with 500 repetitions: 
+
 ```py
 n_repetitions = 500
 shuffled = out_mcar.copy()
-
 tvds = []
+
 for _ in range(n_repetitions):
+
     shuffled['CAUSE.CATEGORY'] = np.random.permutation(shuffled['CAUSE.CATEGORY'])
-    
+
     pivoted = (
         shuffled.pivot_table(index='CAUSE.CATEGORY', columns='detail_missing', aggfunc='size')
         .apply(lambda x: x / x.sum())
-    
     )
+
     tvd = pivoted.diff(axis=1).iloc[:, -1].abs().sum() / 2
     tvds.append(tvd)
 ```
 
 - Then we find the observed total variation distance:
+
 ```py
     observed_tvd = out_dist.diff(axis=1).iloc[:, -1].abs().sum() / 2
 ```
+
     The observed TVD is 0.28859.
 
 - Next, we plot the empirical distribution of the TVD:
@@ -282,15 +286,15 @@ determine if they are from the same population or if they are from different pop
 ```py
 n_repetitions = 500
 shuffled = out_mcar.copy()
-
 tvds = []
+
 for _ in range(n_repetitions):
+
     shuffled['CAUSE.CATEGORY'] = np.random.permutation(shuffled['CAUSE.CATEGORY'])
     
     pivoted = (
         shuffled.pivot_table(index='CAUSE.CATEGORY', columns='climate_missing', aggfunc='size')
         .apply(lambda x: x / x.sum())
-    
     )
     
     tvd = pivoted.diff(axis=1).iloc[:, -1].abs().sum() / 2
@@ -302,6 +306,7 @@ for _ in range(n_repetitions):
 ```py
     observed_tvd = out_dist.diff(axis=1).iloc[:, -1].abs().sum() / 2
 ```
+
     The observed tvd is 0.228.
 
 - Next, we plot the empirical distribution of the TVD:
@@ -375,6 +380,7 @@ ca_prop
 ```py
     observed_tvd = np.sum(np.abs(ca_prop['chance'] - ca_prop['CA'].to_numpy())) / 2
 ```
+
     The observed TVD is 0.438596.
 
 - We can now plot the empirical distribution of the TVD:
