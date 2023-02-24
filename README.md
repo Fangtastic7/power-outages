@@ -17,6 +17,8 @@ There are many methods for power-outages, but I will they usually happen due ran
 Random chance and human actions are hard to analyze, especially when finding how power-outages occur because there can be infinite 
 number of reasons for a cause of a power-outage. Therefore, I will be analyzing power-outages from natural disasters, particularly severe weather. 
 
+The question I will be investigating is determining if wildfires are the main cause of power outages in California.
+
 ---
 
 ## Dataset
