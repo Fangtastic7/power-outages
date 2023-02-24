@@ -2,8 +2,6 @@
 
 ### February 2023
 
-![blackout](blackout.jpg)
-
 ---
 
 ## Introduction
