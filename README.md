@@ -210,47 +210,19 @@ There is some reportings in the cause category detail of having a null value. In
 **Aproach:** Since we are using two categorical distributions, we use Total Variation Distance to
 determine if they are from the same population or if they are from different populations.
 
-- We first conduct a permutation test with 500 repetitions: 
+- We first conduct a permutation test with 500 repetitions of calculating the TVD.
 
-```py
-n_repetitions = 500
-shuffled = out_mcar.copy()
-tvds = []
-
-for _ in range(n_repetitions):
-
-    shuffled['CAUSE.CATEGORY'] = np.random.permutation(shuffled['CAUSE.CATEGORY'])
-
-    pivoted = (
-        shuffled.pivot_table(index='CAUSE.CATEGORY', columns='detail_missing', aggfunc='size')
-        .apply(lambda x: x / x.sum())
-    )
-
-    tvd = pivoted.diff(axis=1).iloc[:, -1].abs().sum() / 2
-    tvds.append(tvd)
-```
-
-- Then we find the observed total variation distance:
-
-```py
-    observed_tvd = out_dist.diff(axis=1).iloc[:, -1].abs().sum() / 2
-```
-
-    The observed TVD is 0.28859.
+- Then we find the observed total variation distance, which is 0.28859.
 
 - Next, we plot the empirical distribution of the TVD:
 
 <iframe src="assets/ed_detail_missingness_tvd.html" width=600 height=600 frameBorder=0></iframe>
 
-- After, we compute the p-value to see whether or not we reject if the two distributions came from the same population:
+- After, we compute the p-value to see whether or not we reject if the two distributions came from the same population.
 
-```py
-    np.mean(np.array(tvds) >= observed_tvd)
-```
+- The p-value is approximately 0.0.
 
-- The p-value is approximately 0.0
-
-- We shall now compare the distribution when there is missingness versus when there is not missingness.
+- We shall now compare the distribution when there is missingness versus when there is not missingness:
 
 <iframe src="assets/detail_missing_kde.html" width=600 height=600 frameBorder=0></iframe>
 
@@ -281,44 +253,17 @@ for _ in range(n_repetitions):
 **Approach**: Since we are using two categorical distributions, we use Total Variation Distance to
 determine if they are from the same population or if they are from different populations.
 
-- We first conduct a permutation test with 500 repetitions: 
+- We first conduct a permutation test with 500 repetitions of calculating the TVD. 
 
-```py
-n_repetitions = 500
-shuffled = out_mcar.copy()
-tvds = []
-
-for _ in range(n_repetitions):
-
-    shuffled['CAUSE.CATEGORY'] = np.random.permutation(shuffled['CAUSE.CATEGORY'])
-    
-    pivoted = (
-        shuffled.pivot_table(index='CAUSE.CATEGORY', columns='climate_missing', aggfunc='size')
-        .apply(lambda x: x / x.sum())
-    )
-    
-    tvd = pivoted.diff(axis=1).iloc[:, -1].abs().sum() / 2
-    tvds.append(tvd)
-```
-
-- Then we find the observed total variation distance:
-
-```py
-    observed_tvd = out_dist.diff(axis=1).iloc[:, -1].abs().sum() / 2
-```
-
-    The observed tvd is 0.228.
+- Then we find the observed total variation distance, which is 0.228.
 
 - Next, we plot the empirical distribution of the TVD:
 
 <iframe src="assets/climate_ed_tvd.html" width=600 height=600 frameBorder=0></iframe>
 
-- After, we compute the p-value to see whether or not we reject if the two distributions came from the same population:
+- After, we compute the p-value to see whether or not we reject if the two distributions came from the same population.
 
-```py
-    np.mean(np.array(tvds) >= observed_tvd)
-```
-- The p-value is 0.33
+- The p-value is 0.33.
 
 **Analysis**: The p-value is 0.33, which is greater than the 0.05 threshold, indicating that 'climate' is missing completely at random. We can say that CAUSE.CATEGORY when CLIMATE.CATEGORY is missing is not dependent on CAUSE.CATEGORY when CLIMATE.CATEGORY is not missing.
 
@@ -334,21 +279,7 @@ California Wildfires seem to always be on the news annually. From burning down S
 - We first need to evaluate the likelihoods of each type of severe weather happening in California with the data.
 - Also, we can calculate the equal probabilities if we assume that all types of weather happen at the same rate (based on null).
 
-```py
-out = outage.copy()
-ca_severe = out[(out['CAUSE.CATEGORY']=='severe weather') & (out['POSTAL.CODE'] == 'CA')]
-ca_table = pd.pivot_table(ca_severe, values = 'OUTAGE.DURATION', index=['CAUSE.CATEGORY.DETAIL'], columns=['POSTAL.CODE'], aggfunc='count', fill_value=0)
-ca_table.columns.name = 'State'
-ca_table.index.name = 'Weather'
-total = ca_table.sum(axis=0)
-ca_prop = (ca_table / total[0])
-#prob is equal likelihoods of all types of severe weather occurring
-prob = pd.Series(total/12/total).repeat(12)[1]
-ca_prop = ca_prop.assign(chance=prob)
-ca_prop
-```
-
-- Here is the table of 'ca_prop':
+- Here is the table probabilities:
 
 | Weather      |        CA |    chance |
 |:-------------|----------:|----------:|
@@ -367,31 +298,16 @@ ca_prop
 
 ---
 
-- Now, we conduct a hypothesis test for 1000 repetitions and using TVD (two categorical):
+- Now, we conduct a hypothesis test for 1000 repetitions and we calculate the TVD because we are dealing with 
+two categorical distributions. 'CA' and 'chance' are the two categorical distributions in this case.
 
-```py
-    num_reps = 1000
-    wildfire_draws = np.random.multinomial(total, ca_prop['CA'], size=num_reps) / total[0]
-    tvd = np.sum(np.abs(wildfire_draws - ca_prop['CA'].to_numpy()), axis=1) / 2
-```
-
-- To add on, we calculate the observed tvd:
-
-```py
-    observed_tvd = np.sum(np.abs(ca_prop['chance'] - ca_prop['CA'].to_numpy())) / 2
-```
-
-    The observed TVD is 0.438596.
+- To add on, we calculate the observed tvd, which we find it to be 0.438596.
 
 - We can now plot the empirical distribution of the TVD:
 
 <iframe src="assets/hyp_test_ed_tvd.html" width=600 height=600 frameBorder=0></iframe>
 
-- Finally, we compute the p-value:
-
-```py
-    (np.array(tvd) >= observed_tvd).mean()
-```
+- Finally, we compute the p-value at a significance level of 0.05.
 
 - The p-value is approximately 0.0.
 
