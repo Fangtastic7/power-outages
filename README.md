@@ -277,7 +277,7 @@ for _ in range(n_repetitions):
 **Approach**: Since we are using two categorical distributions, we use Total Variation Distance to
 determine if they are from the same population or if they are from different populations.
 
- - We first conduct a permutation test with 500 repetitions: 
+- We first conduct a permutation test with 500 repetitions: 
 
 ```py
 n_repetitions = 500
