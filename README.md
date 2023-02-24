@@ -89,8 +89,17 @@ There are more rows, but I organized everything into its own columns and convert
 
 Since I will be focusing on the severe weather in states, let us take a look at some statistics regarding outages.
 
-<iframe src="assets/state_outages.html" width=800 height=600 frameBorder=0></iframe>
+---
+<iframe src="assets/state_outages.html" width=600 height=600 frameBorder=0></iframe>
 
+In this visual, I look at the count of outages per state.
+
+---
+<iframe src="assets/outages_cause.html" width=600 height=600 frameBorder=0></iframe>
+
+In addition, I look at the count of outages for each cause.
+
+---
 
 ### Statistics of States above 50 Power-Outages 
 
