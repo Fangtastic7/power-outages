@@ -66,10 +66,30 @@ The dataset contains many null values and the columns and rows are not a great w
 | nan                                                                                                         | 3            | 2010         | 10           |
 | nan                                                                                                         | 4            | 
 
+The data is not very organized. The most left column has information such as the general title for the time period and variable//units for columns that I need. In addition, from index 0 to 3 there are extra null rows.
 
+After cleaning the data, I get:
+
+|    |   OBS |   YEAR |   MONTH | U.S._STATE   | POSTAL.CODE   |
+|---:|------:|-------:|--------:|:-------------|:--------------|
+|  0 |     1 |   2011 |       7 | Minnesota    | MN            |
+|  1 |     2 |   2014 |       5 | Minnesota    | MN            |
+|  2 |     3 |   2010 |      10 | Minnesota    | MN            |
+|  3 |     4 |   2012 |       6 | Minnesota    | MN            |
+|  4 |     5 |   2015 |       7 | Minnesota    | MN            |
+|  5 |     6 |   2010 |      11 | Minnesota    | MN            |
+|  6 |     7 |   2010 |       7 | Minnesota    | MN            |
+|  7 |     8 |   2005 |       6 | Minnesota    | MN            |
+|  8 |     9 |   2015 |       3 | Minnesota    | MN            |
+|  9 |    10 |   2013 |       6 | Minnesota    | MN            |
+
+There are more rows, but I organized everything into its own columns and converted certain values like date and time into datetime objects.
 
 ### Visualizations
 
+Since I will be focusing on the severe weather in states, let us take a look at some statistics regarding outages.
+
+<iframe src="assets/state_outages.html" width=800 height=600 frameBorder=0></iframe>
 
 
 ### Statistics of States above 50 Power-Outages 
