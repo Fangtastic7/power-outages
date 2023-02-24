@@ -1,10 +1,3 @@
----
-layout: page
-title: Power-Outages in California
-desription: Power-Outages in California
-nav_exclude: true
----
-
 #Data Analysis: Power-Outages in California 📊
 
 ###February 2023
@@ -24,8 +17,11 @@ This is why we should study power-outages!
 
 ##Dataset
 
+The dataset used in the analysis comes from the article "A Multi-Hazard Approach to Assess Severe Weather-Induced Major Power Outage Risks in the U.S." The data describes major outages in the states of the U.S. between January 2000 and July 2016.
 
 
+
+---
 
 ##Exploratory Data Analysis
 
