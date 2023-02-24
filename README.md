@@ -201,11 +201,56 @@ There is some reportings in the cause category detail of having a null value. In
 | severe weather                |                0.541863  |               0.397028  |
 | system operability disruption |                0.0348071 |               0.191083  |
 
+
  - Let us plot missingness in a bar plot:
 
  <iframe src="assets/detail_missingness.html" width=600 height=600 frameBorder=0></iframe>
 
+---
+**Aproach:** Since we are using two categorical distributions, we use Total Variation Distance to
+determine if they are from the same population or if they are from different populations.
 
+ - We first conduct a permutation test with 500 repetitions: 
+```py
+    n_repetitions = 500
+shuffled = out_mcar.copy()
+
+tvds = []
+for _ in range(n_repetitions):
+    shuffled['CAUSE.CATEGORY'] = np.random.permutation(shuffled['CAUSE.CATEGORY'])
+    
+    pivoted = (
+        shuffled.pivot_table(index='CAUSE.CATEGORY', columns='detail_missing', aggfunc='size')
+        .apply(lambda x: x / x.sum())
+    
+    )
+    tvd = pivoted.diff(axis=1).iloc[:, -1].abs().sum() / 2
+    tvds.append(tvd)
+```
+
+- Then we find the observed total variation distance:
+```py
+    observed_tvd = out_dist.diff(axis=1).iloc[:, -1].abs().sum() / 2
+```
+    The observed TVD is 0.28859.
+
+- Next, we plot the empirical distribution of the TVD:
+
+<iframe src="assets/ed_detail_missingness_tvd.html" width=600 height=600 frameBorder=0></iframe>
+
+- After, we compute the p-value to see whether or not we reject if the two distributions came from the same population:
+
+```py
+    np.mean(np.array(tvds) >= observed_tvd)
+```
+
+- The p-value is approximately 0.0
+
+- We shall now compare the distribution when there is missingness versus when there is not missingness.
+
+<iframe src="assets/detail_missing_kde.html" width=600 height=600 frameBorder=0></iframe>
+
+**Analysis:** The p-value is 0.0, which indicates that 'detail' is Missing at Random. This can also be demonstrated through the differences between the two curves in the Kernel Density Estimation graph.
 ---
 
 ## Does Power-Outages occur mainly because of wildfires in California?
