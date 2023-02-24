@@ -2,6 +2,8 @@
 
 ### February 2023
 
+<img src="blackout.jpg"  width="60%" height="30%">
+
 ---
 
 ## Introduction
@@ -92,17 +94,17 @@ Since I will be focusing on the severe weather in states, let us take a look at 
 ---
 In this visual, I look at the count of outages per state.
 
-<iframe src="assets/state_outages.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/state_outages.html" width=600 height=400 frameBorder=0></iframe>
 
 ---
 In addition, I look at the count of outages for each cause.
 
-<iframe src="assets/outages_cause.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/outages_cause.html" width=600 height=400 frameBorder=0></iframe>
 
 ---
 Since the focus is on severe weather, here is the amount of outages per type of weather.
 
-<iframe src="assets/outages_weather.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/outages_weather.html" width=600 height=400 frameBorder=0></iframe>
 
 --- 
 
@@ -111,19 +113,19 @@ Alongside severe weather, I explored the residential, commercial, and industrial
 
 ### **Residential Electricity Consumption Rate (%)**
 
-<iframe src="assets/rec_chloro.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/rec_chloro.html" width=600 height=400 frameBorder=0></iframe>
 
 ---
 
  ### **Commercial Electricity Consumption Rate (%)**
 
-<iframe src="assets/cec_chloro.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/cec_chloro.html" width=600 height=400 frameBorder=0></iframe>
 
 ---
 
  ### **Industrial Electricity Consumption Rate (%)**
 
-<iframe src="assets/iec_chloro.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/iec_chloro.html" width=600 height=400 frameBorder=0></iframe>
 
 ---
 
@@ -132,12 +134,12 @@ I wanted to explore a couple factors outside of severe weather, which included t
 
 ### **Total Amount of Customers Affected**
 
-<iframe src="assets/customers_outage.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/customers_outage.html" width=600 height=450 frameBorder=0></iframe>
 
 
 ### **Total Electricity Consumption (megawatt-hour)**
 
-<iframe src="assets/total_elec_consum.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/total_elec_consum.html" width=600 height=450 frameBorder=0></iframe>
 
 ---
 
@@ -204,7 +206,7 @@ There is some reportings in the cause category detail of having a null value. In
 
  - Let us plot missingness in a bar plot:
 
- <iframe src="assets/detail_missingness.html" width=600 height=600 frameBorder=0></iframe>
+ <iframe src="assets/detail_missingness.html" width=600 height=500 frameBorder=0></iframe>
 
 ---
 **Aproach:** Since we are using two categorical distributions, we use Total Variation Distance to
@@ -216,7 +218,7 @@ determine if they are from the same population or if they are from different pop
 
 - Next, we plot the empirical distribution of the TVD:
 
-<iframe src="assets/ed_detail_missingness_tvd.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/ed_detail_missingness_tvd.html" width=600 height=500 frameBorder=0></iframe>
 
 - After, we compute the p-value to see whether or not we reject if the two distributions came from the same population.
 
@@ -224,7 +226,7 @@ determine if they are from the same population or if they are from different pop
 
 - We shall now compare the distribution when there is missingness versus when there is not missingness:
 
-<iframe src="assets/detail_missing_kde.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/detail_missing_kde.html" width=600 height=500 frameBorder=0></iframe>
 
 **Analysis:** The p-value is 0.0, which indicates that 'detail' is Missing at Random. This can also be demonstrated through the differences between the two curves in the Kernel Density Estimation graph. We can say that CAUSE.CATEGORY when CAUSE.CATEGORY.DETAIL is missing is dependent on CAUSE.CATEGORY when CAUSE.CATEGORY.DETAIL is not missing.
 
@@ -246,7 +248,7 @@ determine if they are from the same population or if they are from different pop
 
  - Let us plot missingness in a bar plot:
 
-<iframe src="assets/climate_missingness_bar.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/climate_missingness_bar.html" width=600 height=500 frameBorder=0></iframe>
 
 ---
 
@@ -259,7 +261,7 @@ determine if they are from the same population or if they are from different pop
 
 - Next, we plot the empirical distribution of the TVD:
 
-<iframe src="assets/climate_ed_tvd.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/climate_ed_tvd.html" width=600 height=500 frameBorder=0></iframe>
 
 - After, we compute the p-value to see whether or not we reject if the two distributions came from the same population.
 
@@ -305,7 +307,7 @@ two categorical distributions. 'CA' and 'chance' are the two categorical distrib
 
 - We can now plot the empirical distribution of the TVD:
 
-<iframe src="assets/hyp_test_ed_tvd.html" width=600 height=600 frameBorder=0></iframe>
+<iframe src="assets/hyp_test_ed_tvd.html" width=600 height=500 frameBorder=0></iframe>
 
 - Finally, we compute the p-value at a significance level of 0.05.
 
