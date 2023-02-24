@@ -2,8 +2,6 @@
 
 ### February 2023
 
-<img src="blackout.jpg"  width="60%" height="30%">
-
 ---
 
 ## Introduction
