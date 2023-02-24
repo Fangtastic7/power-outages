@@ -318,15 +318,81 @@ for _ in range(n_repetitions):
 **Analysis**: The p-value is 0.33, which is greater than the 0.05 threshold, indicating that 'climate' is missing completely at random. We can say that CAUSE.CATEGORY when CLIMATE.CATEGORY is missing is not dependent on CAUSE.CATEGORY when CLIMATE.CATEGORY is not missing.
 
 
-## Does Power-Outages occur mainly because of wildfires in California?
+## Is the Probability of California having a Power Outage the Same for All Types of Severe Weather?
 
-
+California Wildfires seem to always be on the news annually. From burning down Sequoia trees to destroying our precious electricity, this is a problem that needs to be analyzed. However, are wildfires due to chance or they are just more frequent than other types of severe weather at creating consequences like power-outages?
 
 ### Hypothesis Test 
+**Null Hypothesis:** For power outages in California, the types of severe weather happen by random chance.
+**Alt Hypothesis:** For power outages in California, the type of severe weather cannot be explained by random chance alone.
 
+- We first need to evaluate the likelihoods of each type of severe weather happening in California with the data.
+- Also, we can calculate the equal probabilities if we assume that all types of weather happen at the same rate (based on null).
 
+```py
+out = outage.copy()
+ca_severe = out[(out['CAUSE.CATEGORY']=='severe weather') & (out['POSTAL.CODE'] == 'CA')]
+ca_table = pd.pivot_table(ca_severe, values = 'OUTAGE.DURATION', index=['CAUSE.CATEGORY.DETAIL'], columns=['POSTAL.CODE'], aggfunc='count', fill_value=0)
+ca_table.columns.name = 'State'
+ca_table.index.name = 'Weather'
+total = ca_table.sum(axis=0)
+ca_prop = (ca_table / total[0])
+#prob is equal likelihoods of all types of severe weather occurring
+prob = pd.Series(total/12/total).repeat(12)[1]
+ca_prop = ca_prop.assign(chance=prob)
+ca_prop
+```
+
+- Here is the table of 'ca_prop':
+
+| Weather      |        CA |    chance |
+|:-------------|----------:|----------:|
+| earthquake   | 0.0175439 | 0.0833333 |
+| fog          | 0.0175439 | 0.0833333 |
+| heatwave     | 0.140351  | 0.0833333 |
+| heavy wind   | 0.0526316 | 0.0833333 |
+| lightning    | 0.0175439 | 0.0833333 |
+| storm        | 0.175439  | 0.0833333 |
+| thunderstorm | 0.0701754 | 0.0833333 |
+| wildfire     | 0.245614  | 0.0833333 |
+| wind         | 0         | 0.0833333 |
+| wind storm   | 0.0175439 | 0.0833333 |
+| wind/rain    | 0.0350877 | 0.0833333 |
+| winter storm | 0.210526  | 0.0833333 |
+
+---
+
+- Now, we conduct a hypothesis test for 1000 repetitions and using TVD (two categorical):
+
+```py
+    num_reps = 1000
+    wildfire_draws = np.random.multinomial(total, ca_prop['CA'], size=num_reps) / total[0]
+    tvd = np.sum(np.abs(wildfire_draws - ca_prop['CA'].to_numpy()), axis=1) / 2
+```
+
+- To add on, we calculate the observed tvd:
+
+```py
+    observed_tvd = np.sum(np.abs(ca_prop['chance'] - ca_prop['CA'].to_numpy())) / 2
+```
+    The observed TVD is 0.438596.
+
+- We can now plot the empirical distribution of the TVD:
+
+<iframe src="assets/hyp_test_ed_tvd.html" width=600 height=600 frameBorder=0></iframe>
+
+- Finally, we compute the p-value:
+
+```py
+    (np.array(tvd) >= observed_tvd).mean()
+```
+
+- The p-value is approximately 0.0.
 
 ### Conclusion
+
+- The chance that the observed TVD came from the distribution of TVDs under the null is approximately 0. We are sure that the types of severe weather that occur in California are not solely due to chance. There may be external factors involved.
+
 
 
 
