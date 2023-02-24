@@ -6,7 +6,6 @@ nav_exclude: true
 ---
 
 #Data Analysis: Power-Outages in California 📊
-{:.no_toc}
 
 ###February 2023
 
@@ -14,8 +13,18 @@ nav_exclude: true
 
 ##Introduction
 
+Electricity is indispensable. From the lights in our room and to the screens of our electronic devices, we need electricity.
+
+However, what if we suddenly just lose that power and everything goes dark?
+This would be a total nightmare. No lights but only darkness. 
+
+This is why we should study power-outages! 
+
+---
 
 ##Dataset
+
+
 
 
 ##Exploratory Data Analysis
