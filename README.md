@@ -188,7 +188,7 @@ There is some reportings in the cause category detail of having a null value. In
 
 ### Missingness in Detail of Cause Category
 
-**Comparing the Cause Category with its Detail Cause Category column**
+**Comparing the Cause Category with its Missingness in the Detail Cause Category column**
  - We compare when the detail is missing from each cause:
 
 | CAUSE.CATEGORY                |   detail_missing = False |   detail_missing = True |
@@ -212,7 +212,7 @@ determine if they are from the same population or if they are from different pop
 
  - We first conduct a permutation test with 500 repetitions: 
 ```py
-    n_repetitions = 500
+n_repetitions = 500
 shuffled = out_mcar.copy()
 
 tvds = []
@@ -250,8 +250,73 @@ for _ in range(n_repetitions):
 
 <iframe src="assets/detail_missing_kde.html" width=600 height=600 frameBorder=0></iframe>
 
-**Analysis:** The p-value is 0.0, which indicates that 'detail' is Missing at Random. This can also be demonstrated through the differences between the two curves in the Kernel Density Estimation graph.
+**Analysis:** The p-value is 0.0, which indicates that 'detail' is Missing at Random. This can also be demonstrated through the differences between the two curves in the Kernel Density Estimation graph. We can say that CAUSE.CATEGORY when CAUSE.CATEGORY.DETAIL is missing is dependent on CAUSE.CATEGORY when CAUSE.CATEGORY.DETAIL is not missing.
+
 ---
+
+### Missingness of the Climate Category
+**Comparing the Cause Category with its Missingness in the Climate Category Column** 
+- We compare the Missingness in climate for each cause:
+
+| CAUSE.CATEGORY                |   climate_missing = False |   climate_missing = True |
+|:------------------------------|--------------------------:|-------------------------:|
+| equipment failure             |                 0.037377  |                 0.333333 |
+| fuel supply emergency         |                 0.0327869 |                 0.111111 |
+| intentional attack            |                 0.274098  |               nan        |
+| islanding                     |                 0.0301639 |               nan        |
+| public appeal                 |                 0.0452459 |               nan        |
+| severe weather                |                 0.497705  |                 0.444444 |
+| system operability disruption |                 0.082623  |                 0.111111 |
+
+ - Let us plot missingness in a bar plot:
+
+<iframe src="assets/climate_missingness_bar.html" width=600 height=600 frameBorder=0></iframe>
+
+---
+
+**Approach**: Since we are using two categorical distributions, we use Total Variation Distance to
+determine if they are from the same population or if they are from different populations.
+
+ - We first conduct a permutation test with 500 repetitions: 
+
+```py
+n_repetitions = 500
+shuffled = out_mcar.copy()
+
+tvds = []
+for _ in range(n_repetitions):
+    shuffled['CAUSE.CATEGORY'] = np.random.permutation(shuffled['CAUSE.CATEGORY'])
+    
+    pivoted = (
+        shuffled.pivot_table(index='CAUSE.CATEGORY', columns='climate_missing', aggfunc='size')
+        .apply(lambda x: x / x.sum())
+    
+    )
+    
+    tvd = pivoted.diff(axis=1).iloc[:, -1].abs().sum() / 2
+    tvds.append(tvd)
+```
+
+- Then we find the observed total variation distance:
+
+```py
+    observed_tvd = out_dist.diff(axis=1).iloc[:, -1].abs().sum() / 2
+```
+    The observed tvd is 0.228.
+
+- Next, we plot the empirical distribution of the TVD:
+
+<iframe src="assets/climate_ed_tvd.html" width=600 height=600 frameBorder=0></iframe>
+
+- After, we compute the p-value to see whether or not we reject if the two distributions came from the same population:
+
+```py
+    np.mean(np.array(tvds) >= observed_tvd)
+```
+- The p-value is 0.33
+
+**Analysis**: The p-value is 0.33, which is greater than the 0.05 threshold, indicating that 'climate' is missing completely at random. We can say that CAUSE.CATEGORY when CLIMATE.CATEGORY is missing is not dependent on CAUSE.CATEGORY when CLIMATE.CATEGORY is not missing.
+
 
 ## Does Power-Outages occur mainly because of wildfires in California?
 
