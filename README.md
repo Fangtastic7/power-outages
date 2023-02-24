@@ -130,12 +130,12 @@ Alongside severe weather, I explored the residential, commercial, and industrial
 For the states - California, Texas, and Washington - that have over 50 major power-outages, I decided to focus on these states.
 I wanted to explore a couple factors outside of severe weather, which included the amount of customers using electricity for these states
 
-1. Total Amount of Customers Affected
+### **Total Amount of Customers Affected**
 
 <iframe src="assets/customers_outage.html" width=600 height=600 frameBorder=0></iframe>
 
 
-2. Total Electricity Consumption (megawatt-hour)
+### **Total Electricity Consumption (megawatt-hour)**
 
 <iframe src="assets/total_elec_consum.html" width=600 height=600 frameBorder=0></iframe>
 
@@ -143,7 +143,7 @@ I wanted to explore a couple factors outside of severe weather, which included t
 
 ### Statistics of States above 50 Power-Outages 
 
-1. **Category for Causes of Power-Outages**
+### **Category for Causes of Power-Outages**
 
 | Type                          | CA     | MD     | MI     | NY     | PA     | TX     | WA     |
 |:------------------------------|:-------|:-------|:-------|:-------|:-------|:-------|:-------|
@@ -155,7 +155,7 @@ I wanted to explore a couple factors outside of severe weather, which included t
 | severe weather                | 33.84% | 55.17% | 87.37% | 47.14% | 84.21% | 52.46% | 22.47% |
 | system operability disruption | 19.7%  | 1.72%  | 3.16%  | 10.0%  | 3.51%  | 16.39% | 1.12%  |
 
-2. **Severe Weather Causes**
+### **Severe Weather Causes**
 
 | Weather        | CA     | MD     | MI     | NY     | PA     | TX     | WA    |
 |:---------------|:-------|:-------|:-------|:-------|:-------|:-------|:------|
@@ -182,13 +182,29 @@ I wanted to explore a couple factors outside of severe weather, which included t
 
 ## Missingness
 
-
-
 ### NMAR in the data
+There is some reportings in the cause category detail of having a null value. In the case of severe weather, there can be times, where the type of weather is unrecognizable. As a result, there might not be a certain way of classifying the type of weather. There can possibiliy be another column that signifies whether the answer or solution to what caused the power outage is completed with a 1 (meaning they found how) and 0 (unknown). In some cases, where the duration is not recorded, the power outage may be fixed immediately. In other cases, where the number of customers is not recorded, this can be a rural area, where there is no one who is really affected.
 
 
+### Missingness in Detail of Cause Category
 
-### Total Variation Distance
+**Comparing the Cause Category with its Detail Cause Category column**
+ - We compare when the detail is missing from each cause:
+
+| CAUSE.CATEGORY                |   detail_missing = False |   detail_missing = True |
+|:------------------------------|-------------------------:|------------------------:|
+| equipment failure             |                0.0451552 |               0.0254777 |
+| fuel supply emergency         |                0.0301035 |               0.0403397 |
+| intentional attack            |                0.348071  |               0.101911  |
+| islanding                     |              nan         |               0.0976645 |
+| public appeal                 |              nan         |               0.146497  |
+| severe weather                |                0.541863  |               0.397028  |
+| system operability disruption |                0.0348071 |               0.191083  |
+
+ - Let us plot missingness in a bar plot:
+
+ <iframe src="assets/detail_missingness.html" width=600 height=600 frameBorder=0></iframe>
+
 
 ---
 
