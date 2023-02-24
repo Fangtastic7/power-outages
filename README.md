@@ -1,10 +1,10 @@
-#Data Analysis: Power-Outages in California 📊
+# Data Analysis: Power-Outages in California 📊
 
-###February 2023
+### February 2023
 
 ---
 
-##Introduction
+## Introduction
 
 Electricity is indispensable. From the lights in our room and to the screens of our electronic devices, we need electricity.
 
@@ -15,7 +15,7 @@ This is why we should study power-outages!
 
 ---
 
-##Dataset
+## Dataset
 
 The dataset used in the analysis comes from the article "A Multi-Hazard Approach to Assess Severe Weather-Induced Major Power Outage Risks in the U.S." The data describes major outages in the states of the U.S. between January 2000 and July 2016.
 
@@ -23,31 +23,43 @@ The dataset used in the analysis comes from the article "A Multi-Hazard Approach
 
 ---
 
-##Exploratory Data Analysis
+## Exploratory Data Analysis
 
+---
 
-###Data Cleaning
+### Data Cleaning
 
+---
 
-###Visualizations
+### Visualizations
 
+---
 
-###Statistics of States above 50 Power-Outages 
+### Statistics of States above 50 Power-Outages 
 
+---
 
-##Missingness
+## Missingness
 
-###NMAR in the data
+---
 
-###Total Variation Distance
+### NMAR in the data
 
+---
 
-##Does Power-Outages occur mainly because of wildfires in California?
+### Total Variation Distance
 
-###Hypothesis Test 
+---
 
+## Does Power-Outages occur mainly because of wildfires in California?
 
-###Conclusion
+---
+
+### Hypothesis Test 
+
+---
+
+### Conclusion
 
 
 
