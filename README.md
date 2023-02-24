@@ -109,19 +109,35 @@ Since the focus is on severe weather, here is the amount of outages per type of 
 
 Alongside severe weather, I explored the residential, commercial, and industrial electricty consumption rate for each state.
 
--**Residential Electricity Consumption Rate (%)**
+### **Residential Electricity Consumption Rate (%)**
 
 <iframe src="assets/rec_chloro.html" width=600 height=600 frameBorder=0></iframe>
 
+---
 
--**Commercial Electricity Consumption Rate (%)**
+ ### **Commercial Electricity Consumption Rate (%)**
 
 <iframe src="assets/cec_chloro.html" width=600 height=600 frameBorder=0></iframe>
 
+---
 
--**Industrial Electricity Consumption Rate (%)**
+ ### **Industrial Electricity Consumption Rate (%)**
 
 <iframe src="assets/iec_chloro.html" width=600 height=600 frameBorder=0></iframe>
+
+---
+
+For the states - California, Texas, and Washington - that have over 50 major power-outages, I decided to focus on these states.
+I wanted to explore a couple factors outside of severe weather, which included the amount of customers using electricity for these states
+
+1. Total Amount of Customers Affected
+
+<iframe src="assets/customers_outage.html" width=600 height=600 frameBorder=0></iframe>
+
+
+2. Total Electricity Consumption (megawatt-hour)
+
+<iframe src="assets/total_elec_consum.html" width=600 height=600 frameBorder=0></iframe>
 
 
 ### Statistics of States above 50 Power-Outages 
